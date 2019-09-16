@@ -1,73 +1,77 @@
 #include<stdio.h>
-#define Size 20
-void insert(int item,int *r,int q[]);
-int delete(int q[],int *f,int *r);
-void display(int q[],int r,int f);
-
-void insert(int item,int *r,int q[])
+#define SIZE 10
+void insert(int q[],int *r,int item)
 {
-if(*r==S-1)
-{
-printf("queue overflow\n");
-return;
+ if(*r==SIZE-1)
+ {
+  printf("Queue Overflow\n");
+  return;
+ }
+ *r=*r+1;
+ q[*r]=item;
 }
-q[++(*r)]=item;
-}
-
-int delete(int q[],int *f,int *r)
+int delete(int q[],int *r,int *f)
 {
-if(*f>*r)
-{
-printf("queue underflow\n");
-return -99;
-}
-return q[(*f)++];
+ int item;
+ if(*f>*r)
+ {
+  printf("Queue Underflow\n");
+  return -999;
+ }
+ item=q[*f];
+ *f=*f+1;
+ return item;
 }
 void display(int q[],int r,int f)
 {
-int i;
-if(f>r)
-{
-printf("queue is empty\n");
-return;
-}
-printf("contents of queue are :\n");
-for(i=f;i<=r;i++)
-printf(" %d",q[i]);
-printf("\n");
+ int i;
+ if(f>r)
+ {
+  printf("Queue is empty\n");
+  return;
+ }
+ printf("Contents of the queue are:\n");
+ for(i=f;i<=r;i++)
+  printf("%d ",q[i]);
 }
 int main()
 {
-int front,rare,item,x,ch,n,nd,qu[S],i;
-front=0;
-rare=-1;
-printf("\n enter 1 to insert\n2 to delete\n3 to display\n-1 to exit \n");
-scanf("%d",&ch);
-while(ch!=-1)
-{
-switch(ch)
-{
-case 1: printf("enter the no.of elements to be inserted \n");
-scanf("%d",&n);
-printf("enter the elements to be inserted\n");
-for(i=0;i<n;i++)
-{
-scanf("%d",&it);
-insert(item,&rare,qu);
-}
-break;
-case 2: printf("enter the no.of elements to be deleted\n");
-scanf("%d",&nd);
-printf("the deleted elements are\n");
-for(i=0;i<nd;i++)
-printf("%d\n",delete(qu,&front,&rare));
-break;
-case 3: display(qu,rare,front);
-break;
-default: printf("invalid input\n");
-}
-printf("enter choice or -1 to exit\n");
-scanf("%d",&ch);
-}
-return 0; 
-}
+ int f=0,r=-1;
+ int q[10];
+ int op,sel;
+ do
+ {
+  printf("Choose an operation to perform:\n");
+  printf("1.Insert\n");
+  printf("2.Delete\n");
+  printf("3.Display\n");
+  scanf("%d",&op);
+
+  switch(op)
+  {
+   case 1:{
+	   int item;
+	   printf("Enter the element to be inserted\n");
+	   scanf("%d",&item);
+	   insert(q,&r,item);
+	   break;
+	  }
+   case 2:{
+	   int x;
+	   x=delete(q,&r,&f);
+	   if(x==-999)
+	     break;
+	   printf("Deleted element is %d\n",x);
+	   break;
+	  }
+   case 3:{
+	   display(q,r,f);
+	   break;
+	  }
+   default: printf("Invalid option\n");
+  }
+  printf("\nDo you want to continue?(press 1)\n");
+  scanf("%d",&sel);
+ } while(sel==1);
+ return 1;
+}    
